@@ -1,0 +1,21 @@
+select jmeno, prijmeni, TO_NUMBER('19' || substr(narozen, 1,2), '9999') as rok
+from prukazky
+where TO_NUMBER('19' || substr(narozen, 1,2), '9999') > :rok_p
+order by rok asc;
+
+select jmeno, prijmeni, TO_NUMBER('19' || substr(narozen, 1,2), '9999') as rok
+from prukazky
+where '19' || substr(narozen, 1,2) > to_char(:rok_p)
+order by rok asc;
+
+select jmeno, prijmeni, narozen, months_between (sysdate, narozen)
+from prukazky;
+
+select jmeno, prijmeni, narozen, trunc(months_between (sysdate, narozen) /12)
+from prukazky;
+
+select add_months(sysdate,1) from dual;
+
+select sysdate + 14, add_months(sysdate,6) from dual;
+
+select next_day(sysdate, 'neděle') from dual;
