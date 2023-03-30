@@ -1,0 +1,26 @@
+select jmeno, prijmeni, rezervovano, nazev, autor
+from ctenar join rezervace
+on (ctenar.cislo=rezervace.cislo)  //nebo pouzijes : using (cislo)
+join kniha
+on (kniha.isbn = rezervace.isbn);  //nebo pouzijes : using (isbn)
+
+
+select jmeno, prijmeni, rezervovano, nazev, autor
+from ctenar natural join rezervace natural join kniha;
+
+select nazev, cena, zahranicni
+from titulym
+where (zahranicni = '1' and cena between '20' and '30')
+OR (zahranicni = '0' and cena < '20');
+
+select autor, nazev, rezervovano
+from kniha natural join rezervace;
+
+select autor, nazev, cislo, rezervovano
+from kniha left join rezervace
+using(ISBN)
+order by cislo;
+
+
+select upper(autor)
+from kniha;

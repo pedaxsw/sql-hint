@@ -1,0 +1,9 @@
+select autor, nazev
+from kniha
+where nazev like '%oracle%';
+
+select jmeno, prijmeni, substr(rod_cislo, 8, 4)
+from prukazky;
+
+select jmeno, prijmeni, substr(rod_cislo, instr(rod_cislo, '/')+1, 4)
+from prukazky;

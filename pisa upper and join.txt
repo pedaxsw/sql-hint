@@ -1,0 +1,8 @@
+select jmeno, upper(prijmeni), rezervovano, mesto, isbn
+from ctenar join rezervace
+using (cislo)
+where mesto like 'Praha%'
+order by prijmeni;
+
+select jmeno, prijmeni, substr(jmeno,1,1) || '.' || lower(prijmeni) || '@gmail.com' as email
+from ctenar;

@@ -1,0 +1,27 @@
+select upper(jmeno || ' ' || prijmeni) as osoba
+from prukazky
+where length(prijmeni) < length (jmeno)
+order by prijmeni;
+
+
+
+select upper(jmeno || ' ' || prijmeni) as osoba
+from prukazky
+where length(prijmeni) < length (jmeno)
+and substr(rod_cislo,3,1) in ('5', '6')
+order by prijmeni;
+
+
+
+
+select jmeno, prijmeni, trunc((sysdate -  narozen) / 7) as tydny
+from prukazky;
+
+
+select jmeno, prijmeni, trunc((sysdate -  narozen) / 7, +2) as tydny
+from prukazky;
+
+
+select jmeno, prijmeni, trunc((sysdate -  narozen) / 7) as tydny,
+trunc((sysdate -  narozen) / 365.25) as let
+from prukazky;
