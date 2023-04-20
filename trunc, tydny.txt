@@ -1,0 +1,12 @@
+select jmeno, prijmeni, TRUNC((sysdate - narozen) / 7) as Tydnu
+from prukazky;
+
+select jmeno, prijmeni, TRUNC((sysdate - narozen) / 7) as Tydnu,
+TRUNC((sysdate - narozen) / 365.25) as let
+from prukazky
+order by let asc;
+
+select ev_cislo, interpret, cena, TRUNC(TO_NUMBER(cena, '999.99') * 23) as cena_euro
+from titulym;
+
+select abs(-156.2) from dual;

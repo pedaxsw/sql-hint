@@ -19,3 +19,9 @@ select add_months(sysdate,1) from dual;
 select sysdate + 14, add_months(sysdate,6) from dual;
 
 select next_day(sysdate, 'neděle') from dual;
+
+select next_day(sysdate+14, 'neděle') from dual;
+
+select to_char(sysdate, 'day') from dual;
+
+select to_char(TO_DATE('28.06.2004', 'DD.MM.YYYY'), 'day') from dual;
