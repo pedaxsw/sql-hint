@@ -1,0 +1,22 @@
+
+
+declare
+v_sex number(2,0) :=0;
+v_count number(3,0) :=0;
+
+cursor c_person is 
+select muz, count (*) as pocet
+from prukazky
+group by muz
+order by muz;
+
+begin
+    open c_person;
+    fetch c_person into v_sex, v_count;
+    
+    dbms_output.put_line('V pujcovne je ' || v_count || ' zen');
+    
+    fetch c_person into v_sex, v_count; 
+     dbms_output.put_line('V pujcovne je ' || v_count || ' muzu');
+    
+end;

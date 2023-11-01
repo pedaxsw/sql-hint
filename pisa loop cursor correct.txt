@@ -1,0 +1,23 @@
+declare
+  v_jmeno varchar2(255);
+  v_prijmeni varchar2(255);
+  v_hodnost varchar2(255);
+
+  cursor c_person is 
+    select jmeno, prijmeni, decode(titul, 'Ing.', 'inzenyr', 'RNDr.', 'doktor Prirodnich ved', 'bez titulu') as hodnost
+    from prukazky
+    order by jmeno;
+
+begin
+  open c_person;
+  
+  loop
+    fetch c_person into v_jmeno, v_prijmeni, v_hodnost;
+    exit when c_person%notfound;
+    
+    dbms_output.put_line('Pan/Pani ' || v_jmeno || ' ' || v_prijmeni || ' je ' || v_hodnost);
+  end loop;
+  
+  close c_person;
+end;
+/

@@ -1,0 +1,26 @@
+DECLARE
+  v_jmeno prukazky.jmeno%TYPE;
+  row.prijmeni prukazky.prijmeni%TYPE;
+  row.rod_cislo prukazky.rod_cislo%TYPE;
+  pocet_zaznamu NUMBER(3):= 0;
+  cursor c_uzivatel IS select jmeno, prijmeni, rod_cislo
+                        from prukazky;
+BEGIN
+   -- select count(*) INTO pocet_zaznamu
+   -- from prukazky;
+ -- OPEN c_uzivatel;
+  
+  FOR ROW IN c_uzivatel LOOP
+ --   FETCH c_uzivatel INTO row.jmeno, row.prijmeni, row.rod_cislo;
+    
+   -- EXIT WHEN c_uzivatel%ROWCOUNT = 4;
+     IF substr(row.rod_cislo,3,1) in ('0','1') THEN
+        DBMS_OUTPUT.PUT_LINE('Uzivatel ' || row.jmeno || ' ' || row.prijmeni || ' - rocnik ' || substr(row.rod_cislo,1,2) || '- muz');
+     ELSE
+        DBMS_OUTPUT.PUT_LINE('Uzivatel ' || row.jmeno || ' ' || row.prijmeni || ' - rocnik ' || substr(row.rod_cislo,1,2) || '- zena');
+     END IF;
+ --FETCH c_uzivatel INTO v_jmeno, row.prijmeni, row.rod_cislo;
+  END LOOP;
+  --CLOSE c_uzivatel;
+END;
+/ 

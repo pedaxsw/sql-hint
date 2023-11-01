@@ -1,0 +1,35 @@
+/*Vytvořte program, který vypíše 2 řádky oznámení o počtu mužů a žen v tabulce PRUKAZKY:
+V půjčovně je ... mužů.
+V půjčovně je ... žen.
+*/
+declare
+
+--v_sex number(1,0) :=0;
+--v_count number(3,0) :=0;
+
+cursor c_person is
+select decode(muz, '0',' žen',
+              '1',' mužů','---') as sex, count(*) as pocet
+from prukazky
+group by decode(muz, '0',' žen',
+              '1',' mužů','---')
+order by sex;
+
+begin
+  -- open c_person;
+  -- fetch c_person into v_sex, v_count;
+  -- vypsání stavu kurzoru
+  dbms_output.put_line('kurzor ' || case c_person%isopen when false then 'closed' when true then 'opened' end);
+
+  for row in c_person loop 
+   -- stav kurzoru
+   dbms_output.put_line('kurzor  ' || case c_person%isopen when false then 'closed' when true then 'opened' end);
+   -- počet načtených záznamů
+   dbms_output.put_line('Načteno ' || c_person%rowcount);
+
+   dbms_output.put_line('V půjčovně je ' || row.pocet || row.sex);
+  end loop;
+   
+ --  close c_person;
+end;
+

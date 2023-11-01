@@ -1,0 +1,99 @@
+
+
+DECLARE
+  v_jmeno prukazky.jmeno%TYPE;
+  v_prijmeni prukazky.prijmeni%TYPE;
+  v_rc prukazky.rod_cislo%TYPE;
+  cursor c_uzivatel IS select jmeno, prijmeni, rod_cislo
+                        from prukazky;
+BEGIN
+  OPEN c_uzivatel;
+  LOOP
+    FETCH c_uzivatel INTO v_jmeno, v_prijmeni, v_rc;
+    EXIT WHEN c_uzivatel%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE('Uzivatel ' || v_jmeno || ' ' || v_prijmeni || ' - rocnik ' || substr(v_rc,1,2));
+  END LOOP;
+  CLOSE c_uzivatel;
+END;
+/
+
+
+
+#####################VYPIS POUZE 3 RADKY#######################
+
+
+DECLARE
+  v_jmeno prukazky.jmeno%TYPE;
+  v_prijmeni prukazky.prijmeni%TYPE;
+  v_rc prukazky.rod_cislo%TYPE;
+  cursor c_uzivatel IS select jmeno, prijmeni, rod_cislo
+                        from prukazky;
+BEGIN
+  OPEN c_uzivatel;
+  LOOP
+    FETCH c_uzivatel INTO v_jmeno, v_prijmeni, v_rc;
+    EXIT WHEN c_uzivatel%NOTFOUND;
+    EXIT WHEN c_uzivatel%ROWCOUNT = 4;
+    DBMS_OUTPUT.PUT_LINE('Uzivatel ' || v_jmeno || ' ' || v_prijmeni || ' - rocnik ' || substr(v_rc,1,2));
+  END LOOP;
+  CLOSE c_uzivatel;
+END;
+/ 
+
+###################WITH MUZ OR ZENA#########################
+
+DECLARE
+  v_jmeno prukazky.jmeno%TYPE;
+  v_prijmeni prukazky.prijmeni%TYPE;
+  v_rc prukazky.rod_cislo%TYPE;
+  cursor c_uzivatel IS select jmeno, prijmeni, rod_cislo
+                        from prukazky;
+BEGIN
+  OPEN c_uzivatel;
+  LOOP
+    FETCH c_uzivatel INTO v_jmeno, v_prijmeni, v_rc;
+    EXIT WHEN c_uzivatel%NOTFOUND;
+    EXIT WHEN c_uzivatel%ROWCOUNT = 4;
+ IF substr(v_rc,3,1) in ('0','1') THEN
+    DBMS_OUTPUT.PUT_LINE('Uzivatel ' || v_jmeno || ' ' || v_prijmeni || ' - rocnik ' || substr(v_rc,1,2) || '- muz');
+ ELSE
+    DBMS_OUTPUT.PUT_LINE('Uzivatel ' || v_jmeno || ' ' || v_prijmeni || ' - rocnik ' || substr(v_rc,1,2) || '- zena');
+ END IF;
+  END LOOP;
+  CLOSE c_uzivatel;
+END;
+/ 
+
+
+
+
+#################VLASTNI UKOL A JE ACTUALY GOOD#######################
+
+DECLARE
+  v_nazev titulym.nazev%TYPE;
+  v_interpret titulym.interpret%TYPE;
+  v_zanr titulym.zanr%TYPE;
+  cursor c_uzivatel IS select nazev, interpret, zanr
+                        from titulym;
+BEGIN
+  OPEN c_uzivatel;
+  LOOP
+    FETCH c_uzivatel INTO v_nazev, v_interpret, v_zanr;
+    EXIT WHEN c_uzivatel%NOTFOUND;
+    EXIT WHEN c_uzivatel%ROWCOUNT = 4;
+ IF v_zanr = 1 THEN
+    DBMS_OUTPUT.PUT_LINE('Album ' || v_nazev || ' od interpreta ' || v_interpret || ' je rock');
+ ELSIF v_zanr = 2 THEN
+    DBMS_OUTPUT.PUT_LINE('Album ' || v_nazev || ' od interpreta ' || v_interpret || ' je folk');
+ ELSIF v_zanr = 3 THEN
+    DBMS_OUTPUT.PUT_LINE('Album ' || v_nazev || ' od interpreta ' || v_interpret || ' je jazz');
+ ELSIF v_zanr = 4 THEN
+    DBMS_OUTPUT.PUT_LINE('Album ' || v_nazev || ' od interpreta ' || v_interpret || ' je country');
+ ELSE
+    DBMS_OUTPUT.PUT_LINE('Album ' || v_nazev || ' od interpreta ' || v_interpret || ' je pop');
+ END IF;
+  END LOOP;
+  CLOSE c_uzivatel;
+END;
+/
+

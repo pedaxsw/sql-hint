@@ -1,0 +1,50 @@
+
+
+declare
+--v_sex number(2,0) :=0;
+--v_count number(3,0) :=0;
+
+cursor c_person is 
+select decode(muz,'0',' zen', '1',' muzu', '------') as sex, count (*) as pocet
+
+from prukazky
+group by decode(muz,'0',' zen', '1',' muzu', '------')
+order by sex;
+
+begin
+    -- open c_person;
+    -- fetch c_person into v_sex, v_count;
+    
+    for row in c_person loop
+    dbms_output.put_line('V pujcovne je ' || row.pocet || row.sex);
+    end loop;
+    -- close c_person
+end;
+
+
+##########row count####################
+
+
+
+declare
+--v_sex number(2,0) :=0;
+--v_count number(3,0) :=0;
+
+cursor c_person is 
+select decode(muz,'0',' zen', '1',' muzu', '  nemocnych') as sex, count (*) as pocet
+
+from prukazky
+group by decode(muz,'0',' zen', '1',' muzu', '  nemocnych')
+order by sex;
+
+begin
+    -- open c_person;
+    -- fetch c_person into v_sex, v_count;
+    
+    for row in c_person loop
+    dbms_output.put_line('Nacteno ' || c_person%rowcount);
+    dbms_output.put_line('V pujcovne je ' || row.pocet || row.sex);
+    end loop;
+    -- close c_person
+end;
+
